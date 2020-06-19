@@ -16,6 +16,20 @@ const EmployeeSchema = mongoose.Schema({
           required: [true, 'Please add a description']
       }
 
-});
+}, {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  });
+
+//Reverse populate with virtuals
+EmployeeSchema.virtual('department', {
+  ref: 'Department',
+  localField: '_id',
+  foreignField: 'employees',
+  justOne: false
+})
+
+
+
  
 module.exports = mongoose.model('Employee', EmployeeSchema);
